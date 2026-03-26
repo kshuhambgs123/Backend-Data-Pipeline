@@ -35,20 +35,34 @@ This project demonstrates a robust data pipeline that:
 
 ---
 
-## 🛠️ Quick Start
+## 🛠️ Project Setup Guide
 
-To build and start all services, simply run the provided setup script:
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/kshuhambgs123/Backend-Data-Pipeline.git
+cd Backend-Data-Pipeline
+```
 
+### Step 2: Ensure Docker is Running
+Verify that **Docker Desktop** is open and active on your machine.
+
+### Step 3: Deployment (Choose ONE)
+
+#### Option A: Docker Compose (Recommended)
+This is the easiest way to start all 3 services at once:
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
+*Note: This script will build all images, start the containers, and wait for the mock server to become healthy.*
 
-This will automatically:
-1.  Validate Docker is running.
-2.  Build all Docker images.
-3.  Start the multi-container environment.
-4.  Wait for the Mock Server and Database to be healthy.
+#### Option B: Local Development Setup
+If you prefer running the Python code directly on your host machine:
+1. Create a virtual environment: `python3 -m venv venv && source venv/bin/activate`
+2. Install requirements: `pip install -r mock-server/requirements.txt -r pipeline-service/requirements.txt`
+3. Start the Postgres DB separately: `docker-compose up -d postgres`
+4. Start Mock Server: `python mock-server/app.py`
+5. Start Pipeline: `export DATABASE_URL=postgresql://postgres:password@localhost:5432/customer_db && export FLASK_API_URL=http://localhost:5000/api/customers && python pipeline-service/main.py`
 
 ---
 
