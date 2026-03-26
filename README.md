@@ -66,22 +66,51 @@ If you prefer running the Python code directly on your host machine:
 
 ---
 
-## 📡 API Endpoints
+## 📡 API Reference
 
-### 1. Flask Mock Server (`localhost:5000`)
-| Endpoint | Method | Description |
-| :--- | :--- | :--- |
-| `/api/health` | GET | Health check status |
-| `/api/customers` | GET | Paginated customers from JSON file (`page`, `limit`) |
-| `/api/customers/{id}` | GET | Fetch a single customer by ID |
+### 1. Mock Server (Flask) - `localhost:5000`
 
-### 2. FastAPI Pipeline Service (`localhost:8000`)
-| Endpoint | Method | Description |
-| :--- | :--- | :--- |
-| `/api/ingest` | POST | Trigger the data ingestion pipeline (Mock → Postgres) |
-| `/api/customers` | GET | Paginated customers from PostgreSQL database |
-| `/api/customers/{id}` | GET | Fetch a single customer from database by ID |
-| `/docs` | GET | **Interactive OpenAPI (Swagger) Documentation** |
+**GET `/api/customers`**
+Retrieve a paginated list of mock customers from the JSON store.
+- **Params**: `page` (default 1), `limit` (default 10)
+- **Sample Response**:
+```json
+{
+  "data": [
+    {
+      "customer_id": "CUST001",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john.doe@example.com",
+      "balance": 1500.5
+    }
+  ],
+  "total": 25,
+  "page": 1,
+  "limit": 1
+}
+```
+
+---
+
+### 2. Pipeline Service (FastAPI) - `localhost:8000`
+
+**POST `/api/ingest`**
+Triggers the `dlt` pipeline to fetch data from Flask and upsert it into Postgres.
+- **Expected Response**:
+```json
+{
+  "status": "success",
+  "records_processed": 25
+}
+```
+
+**GET `/api/customers`**
+Query the ingested data directly from the PostgreSQL database.
+- **Params**: `page`, `limit`
+- **Output**: Fully typed JSON matching the SQL schema.
+
+**Interactive Docs**: Access `http://localhost:8000/docs` for the full OpenAPI 3.0 specification.
 
 ---
 
