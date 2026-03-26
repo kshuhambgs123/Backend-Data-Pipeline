@@ -173,8 +173,15 @@ On newer macOS versions, "AirPlay Receiver" might occupy port 5000.
 
 ---
 
-## ✨ Features Highlight
-- **Upsert Logic**: Uses `dlt` with `write_disposition="merge"` to ensure customer data is updated if it already exists in the database.
-- **Auto-Pagination**: The ingestion service automatically loops through all pages of the Mock Server until all data is retrieved.
-- **Error Handling**: Comprehensive 404 and 500 error management across both services.
-- **Database Normalization**: SQLAlchemy models define strict schemas for data integrity.
+## ✨ Key Features
+
+-   **🔄 Intelligent Upsert Logic**: Leverages the `dlt` (Data Load Tool) library with `write_disposition="merge"`. This ensures that existing customer records are updated rather than duplicated, maintaining a single source of truth.
+-   **📈 Automated Pagination Ingestion**: The pipeline service features a custom generator that intelligently traverses paginated Flask endpoints until the entire upstream dataset is synchronized.
+-   **🛡️ Production-Grade Containerization**: Fully orchestrated 3-service stack using Docker Compose. Includes automated health checks to ensure the database is ready before ingestion begins.
+-   **💎 Schema Integrity & Normalization**: Uses SQLAlchemy ORM to enforce strict data schemas. Includes automated type mapping for complex fields like `DATE` and `TIMESTAMP` from raw JSON strings.
+-   **🛠️ Developer-First Experience**: 
+    -   **Zero-Config Setup**: A single `setup.sh` script to build and run the entire environment.
+    -   **Live Documentation**: Interactive OpenAPI/Swagger UI at `/docs` for real-time API testing.
+-   **🚀 High-Performance Data Loading**: Implements memory-efficient stream processing for data ingestion, ensuring stability even with larger datasets.
+
+---
