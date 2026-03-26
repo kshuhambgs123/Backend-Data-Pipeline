@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+.coverage
+htmlcov/
+.DS_Store
+.dlt/
+customer_pipeline.log
+_storage/
+data_pipeline_service.db
+venv/
+env/
